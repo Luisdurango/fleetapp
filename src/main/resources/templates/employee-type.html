@@ -492,31 +492,42 @@
       </nav>
     </div><!-- End Page Title -->
 
-    <section class="section">
-      <div class="row">
-        <div class="col-lg-6">
+    <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#add">New Employee Type</button>
+    <div class="card">
+      <div class="card-body">
 
-          <div class="card">
-            <div class="card-body">
-              <h5 class="card-title">Example Card</h5>
-              <p>This is an examle page with no contrnt. You can use it as a starter for your custom pages.</p>
-            </div>
-          </div>
 
-        </div>
+        <h5 class="card-title">Employee Types Management</h5>
 
-        <div class="col-lg-6">
+        <!-- Table with hoverable rows -->
+        <table class="table table-hover">
+          <thead>
+          <tr>
+            <th scope="col">Id</th>
+            <th scope="col">Description</th>
+            <th scope="col">Details</th>
+          </tr>
+          </thead>
+          <tbody>
+          <tr th:each="employeeType:${employeeType}">
 
-          <div class="card">
-            <div class="card-body">
-              <h5 class="card-title">Example Card</h5>
-              <p>This is an examle page with no contrnt. You can use it as a starter for your custom pages.</p>
-            </div>
-          </div>
+            <th th:text="${employeeType.id}"></th>
+            <td th:text="${employeeType.description}"></td>
+            <td th:text="${employeeType.details}"></td>
+            <td>
+              <div class="btn-group">
+                <a th:href="@{/employee-type/findById/(id=${employeeType.id})}" class="btn btn-primary" id="editButton">Edit</a>
+                <a th:href="@{/employee-type/delete/(id=${employeeType.id})}" class="btn btn-danger" id="deleteButton">Delete</a>
+                <!--                <a th:href="" class="btn btn-danger" id="">Details</a>-->
+              </div>
+            </td>
 
-        </div>
+          </tr>
+          </tbody>
+        </table>
+        <!-- End Table with hoverable rows -->
       </div>
-    </section>
+    </div>
 
   </main><!-- End #main -->
 
@@ -545,9 +556,120 @@
   <script src="assets/vendor/simple-datatables/simple-datatables.js"></script>
   <script src="assets/vendor/tinymce/tinymce.min.js"></script>
   <script src="assets/vendor/php-email-form/validate.js"></script>
+  <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 
   <!-- Template Main JS File -->
   <script src="assets/js/main.js"></script>
+  <script src="assets/js/employeeType.js"></script>
+
+  <!--Start of Insert Modal-->
+  <div class="modal fade" id="add" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="exampleModalLabel">Insert New Location</h5>
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <div class="modal-body">
+          <form th:action="@{/employee-type/addNew}" method="post">
+            <div class="form-group">
+              <label  class="col-form-label">Id:</label>
+              <input type="text" class="form-control" id="recipient-id" name="id" disabled>
+            </div>
+
+
+            <div class="form-group">
+
+            <label  class="col-form-label">Description:</label>
+            <input type="text" class="form-control" id="recipient-description" name="description" required>
+
+          </div>
+
+
+            <div class="form-group">
+
+              <label  class="col-form-label">Details:</label>
+              <input type="text" class="form-control" id="recipient-details" name="details" required>
+
+            </div>
+
+            <div class="form-group">
+              <button type="submit" class="btn btn-primary">Submit</button>
+            </div>
+          </form>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+
+
+        </div>
+      </div>
+    </div>
+  </div>
+  <!--Start of Edit Modal-->
+  <div class="modal fade" id="editModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="e">Edit Location</h5>
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <div class="modal-body">
+          <form th:action="@{/employee-type/update}" method="put">
+            <div class="form-group">
+              <label for="idEdit" class="col-form-label">Id:</label>
+              <input type="text" class="form-control" id="idEdit" name="id" readonly required>
+            </div>
+
+
+            <div class="form-group">
+
+              <label  class="col-form-label">Description:</label>
+              <input type="text" class="form-control" id="descriptionEdit" name="description" required>
+
+            </div>
+
+            <div class="form-group">
+
+              <label  class="col-form-label">Details:</label>
+              <input type="text" class="form-control" id="detailsEdit" name="details" required>
+
+            </div>
+
+            <div class="form-group">
+              <button type="submit" class="btn btn-primary">Submit</button>
+            </div>
+          </form>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+
+        </div>
+      </div>
+    </div>
+  </div>
+  <!--  End if Edit Modal-->
+  <!--  Start of Delete Modal-->
+  <div class="modal" id="deleteModal" tabindex="-1">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title">Confirm Delete</h5>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <div class="modal-body">
+          <p>Are you Sure you Want to Delete?</p>
+        </div>
+        <div class="modal-footer">
+          <a class="btn btn-primary" id="confirmDeleteButton" href="">Delete</a>
+          <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+
+
 
 </body>
 
