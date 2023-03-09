@@ -19,25 +19,25 @@ public class VehicleMaintenance extends Auditable<String> {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
 	@Column(name="id")
 	private int id;
-	
+	private String remarks;
+	private String price;
+
 	@ManyToOne
 	@JoinColumn(name="vehicleid", insertable=false, updatable=false)
 	private Vehicle vehicle;
 	private Integer vehicleid;
-	
+
 	@DateTimeFormat(pattern = "yyyy-MM-dd")
 	private Date startDate;
-	
+
 	@DateTimeFormat(pattern = "yyyy-MM-dd")
 	private Date endDate;
-	
-	private String price;
-	
+
+
 	@ManyToOne
 	@JoinColumn(name="supplierid", insertable=false, updatable=false)
 	private Supplier supplier;
 	private Integer supplierid;
-	
-	private String remarks;
-	
+
+
 }

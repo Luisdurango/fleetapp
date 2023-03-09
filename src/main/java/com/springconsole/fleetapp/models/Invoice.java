@@ -19,12 +19,12 @@ public class Invoice {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Integer id;
 	
-	@DateTimeFormat(pattern = "yyyy-MM-dd")	
+	@DateTimeFormat(pattern = "yyyy-MM-dd")
 	private Date invoiceDate;
 	
 	@ManyToOne
 	@JoinColumn(name="invoicestatusid", insertable=false, updatable=false)	
-	private InvoiceStatus invoiceStatus;
+	private InvoiceStatus invoicestatus;
 	private Integer invoicestatusid;
 	
 	@ManyToOne

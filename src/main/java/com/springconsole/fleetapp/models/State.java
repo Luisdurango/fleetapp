@@ -27,5 +27,10 @@ public class State {
 	private Integer countryid;
 	
 	private String details;
+
+	public State (int id, String name){
+		this.id = id;
+		this.name = name;
+	}
 	
 }

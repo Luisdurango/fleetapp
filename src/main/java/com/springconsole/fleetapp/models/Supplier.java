@@ -25,16 +25,16 @@ public class Supplier {
 	private String mobile;
 	private String website;
 	private String email;
-	
+	private String details;
+
 	@ManyToOne
 	@JoinColumn(name="countryid", insertable=false, updatable=false)
 	private Country country;
 	private Integer countryid;
-	
+
 	@ManyToOne
 	@JoinColumn(name="stateid", insertable=false, updatable=false)
-	private State state;	
+	private State state;
 	private Integer stateid;
-	
-	private String details;
+
 }

@@ -36,6 +36,15 @@ public class Client {
 	@JoinColumn(name="stateid", insertable=false, updatable=false)
 	private State state;	
 	private Integer stateid;
-	
-	private String details;
+
+
+	public Client(int id, String name){
+		this.id = id;
+		this.name = name;
+
+
+	}
+
+
+//	private String details;
 }

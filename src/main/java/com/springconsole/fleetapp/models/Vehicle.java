@@ -24,45 +24,45 @@ public class Vehicle {
 	@ManyToOne
 	@JoinColumn(name="vehicletypeid", insertable=false, updatable=false)
 	private VehicleType vehicleType;
-	private Integer vehicletypeid;	
-	
+	private Integer vehicletypeid;
+
 	private String vehicleNumber;
-	
+	private String remarks;
+
 	@DateTimeFormat(pattern = "yyyy-MM-dd")
 	private Date registrationDate;
-	
+
 	@DateTimeFormat(pattern = "yyyy-MM-dd")
 	private Date acquisitionDate;
 	private String description;
-	
+
 	@ManyToOne
 	@JoinColumn(name="vehiclemakeid", insertable=false, updatable=false)
 	private VehicleMake vehicleMake;
 	private Integer vehiclemakeid;
-	
+
 	private String power;
 	private String fuelCapacity;
 	@ManyToOne
 	@JoinColumn(name="vehiclestatusid", insertable=false, updatable=false)
 	private VehicleStatus vehicleStatus;
-	private Integer vehiclestatusid;	
-	
+	private Integer vehiclestatusid;
+
 	private String netWeight;
 
 	@ManyToOne
 	@JoinColumn(name="employeeid", insertable=false, updatable=false)
 	private Employee inCharge;
 	private Integer employeeid;
-	
+
 	@ManyToOne
 	@JoinColumn(name="vehiclemodelid", insertable=false, updatable=false)
-	private VehicleModel vehicleModel;	
+	private VehicleModel vehiclemodel;
 	private Integer vehiclemodelid;
 
 	@ManyToOne
 	@JoinColumn(name="locationid", insertable=false, updatable=false)	
 	private Location currentLocation;
 	private Integer locationid;
-	
-	private String remarks;	
+
 }

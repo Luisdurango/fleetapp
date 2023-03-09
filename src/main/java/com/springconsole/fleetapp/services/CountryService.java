@@ -30,4 +30,7 @@ public class CountryService {
          countryRepository.deleteById(id);
     }
 
+    //Get only id and description
+    public List<Country> getNameid(){ return countryRepository.findNameid();}
+
 }

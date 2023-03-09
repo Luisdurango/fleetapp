@@ -17,8 +17,8 @@ public class EmployeeTypeService {
         return employeeTypeRepository.findAll();
     }
     //Save new EmployeeType
-    public void save(EmployeeType EmployeeType){
-        employeeTypeRepository.save(EmployeeType);
+    public void save(EmployeeType employeeType){
+        employeeTypeRepository.save(employeeType);
     }
 
     //Get by id

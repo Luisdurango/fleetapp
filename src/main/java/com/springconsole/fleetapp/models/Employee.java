@@ -14,16 +14,16 @@ import lombok.EqualsAndHashCode;
 public class Employee extends Person {
 		
 	@ManyToOne
-	@JoinColumn(name="employeetypeid", insertable=false, updatable=false)
+	@JoinColumn(name="employee_typeid", insertable=false, updatable=false)
 	private EmployeeType employeeType;
-	private Integer employeetypeid;
+	private Integer employee_typeid;
 	private String photo;
 	private String username;
 	
 	@ManyToOne
-	@JoinColumn(name="jobtitleid", insertable=false, updatable=false)
+	@JoinColumn(name="job_titleid", insertable=false, updatable=false)
 	private JobTitle jobTitle;
-	private Integer jobtitleid;
+	private Integer job_titleid;
 	
 	@DateTimeFormat(pattern = "yyyy-MM-dd")	
 	private Date hireDate;

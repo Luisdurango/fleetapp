@@ -11,18 +11,18 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @MappedSuperclass
 public class Person {
-		
+
 	@Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Integer id;
-	private String firstname;
-	private String lastname;
-	private String othername;
+	private String first_name;
+	private String last_name;
+	private String other_name;
 	private String title;
 	private String initials;
-	private String socialSecurityNumber;
+	private String social_security_number;
 	private String gender;
-	private String maritalStatus;
+	private String marital_status;
 	
 	@ManyToOne
 	@JoinColumn(name="countryid", insertable=false, updatable=false)
@@ -35,7 +35,7 @@ public class Person {
 	private Integer stateid;
 	
 	@DateTimeFormat(pattern = "yyyy-MM-dd")
-	private Date dateOfBirth;
+	private Date birthDate;
 	private String city;
 	private String address;
 	private String phone;

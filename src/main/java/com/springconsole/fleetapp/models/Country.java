@@ -27,4 +27,9 @@ public class Country {
 @OneToMany(mappedBy="country")
 @JsonIgnoreProperties("country")
 private List<State> states;
+
+public Country(int id, String description){
+	this.id = id;
+	this.description = description;
+}
 }

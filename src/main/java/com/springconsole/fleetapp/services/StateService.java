@@ -29,4 +29,9 @@ public class StateService {
     public void delete(Integer id){
         stateRepository.deleteById(id);
     }
+
+    //Get only State id and name
+    public List<State>getNameid(){
+        return stateRepository.findNameid();
+    }
 }
