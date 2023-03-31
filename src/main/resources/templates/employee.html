@@ -455,7 +455,7 @@
     </li><!-- End Register Page Nav -->
 
     <li class="nav-item">
-      <a class="nav-link collapsed" href="login.html">
+      <a class="nav-link collapsed" href="customLogin.html">
         <i class="bi bi-box-arrow-in-right"></i>
         <span>Login</span>
       </a>
@@ -515,21 +515,22 @@
         <tbody>
         <tr th:each="employee:${employee}">
           <td>
-          <a id="photoButton" th:href="@{'assets/img/user-photos/avatar.jpeg'}">
-            <img th:src="@{'assets/img/user-photos/avatar.jpeg'}" width="40" height="40" alt="Profile" src="/img/logo.png'">
+          <a id="photoButton" th:href="@{'assets/img/user-photos/' + ${employee.first_name} + '.jpeg'}">
+            <img th:src="@{'assets/img/user-photos/'+ ${employee.first_name} + '.jpeg'}" width="40" height="40" alt="Profile" src="/img/logo.png'">
           </a>
           </td>
           <td hidden th:text="${employee.id}"></td>
           <th th:text="${employee.first_name} + ' ' + ${employee.last_name}"></th>
-          <td th:text="${employee.hireDate}"></td>
+          <td th:text="${#dates.format(employee.hireDate, 'yyyy-MM-dd')}"></td>
           <td th:text="${employee.email}"></td>
           <td th:text="${employee.city}"></td>
           <td th:text="${employee.phone}"></td>
           <td>
             <div class="btn-group">
+              <a th:href="@{/employee/findById/(id=${employee.id})}" class="btn btn-success" id="detailsButton">Details</a>
               <a th:href="@{/employee/findById/(id=${employee.id})}" class="btn btn-primary" id="editButton">Edit</a>
               <a th:href="@{/employee/delete/(id=${employee.id})}" class="btn btn-danger" id="deleteButton">Delete</a>
-              <!--                <a th:href="" class="btn btn-danger" id="">Details</a>-->
+              
             </div>
           </td>
 
@@ -768,35 +769,174 @@
   <div class="modal-dialog" role="document">
     <div class="modal-content">
       <div class="modal-header">
-        <h5 class="modal-title" id="e">Edit Location</h5>
+        <h5 class="modal-title" id="e">Edit Employee</h5>
         <button type="button" class="close" data-dismiss="modal" aria-label="Close"></button>
       </div>
       <div class="modal-body">
         <form th:action="@{/employee/update}" method="put">
+          
           <div class="form-group">
             <label for="idEdit" class="col-form-label">Id:</label>
-            <input type="text" class="form-control" id="idEdit" name="id" readonly required>
+            <input type="text" class="form-control" id="id-edit" name="id" readonly required>
           </div>
 
 
           <div class="form-group">
-
-            <label  class="col-form-label">Description:</label>
-            <input type="text" class="form-control" id="descriptionEdit" name="description" required>
-
+            <label for="first-name-edit" class="col-form-label">First Name:</label>
+            <input type="text" class="form-control" id="first-name-edit" name="first_name" required>
           </div>
 
           <div class="form-group">
-
-            <label  class="col-form-label">Details:</label>
-            <input type="text" class="form-control" id="detailsEdit" name="details" required>
-
+            <label for="last-name-edit" class="col-form-label">Last Name:</label>
+            <input type="text" class="form-control" id="last-name-edit" name="last_name" required>
           </div>
+
+          <div class="form-group">
+            <label for="other-name-edit" class="col-form-label">Other Name:</label>
+            <input type="text" class="form-control" id="other-name-edit" name="other_name" required>
+          </div>
+
+<!--          <div class="form-group">-->
+<!--            <label for="other_name" class="col-form-label">User Name:</label>-->
+<!--            <input type="text" class="form-control" id="other_name" name="other_name" required>-->
+<!--          </div>-->
+
+          <div class="form-group">
+            <label for="title-edit" class="col-form-label">Title:</label>
+            <input type="text" class="form-control" id="title-edit" name="title" >
+          </div>
+
+          <div class="form-group">
+            <label for="initials-edit" class="col-form-label">Initials:</label>
+            <input type="text" class="form-control" id="initials-edit" name="initials" required>
+          </div>
+
+          <div class="form-group">
+            <label for="social-security-edit" class="col-form-label">Social Security Number:</label>
+            <input type="text" class="form-control" id="social-security-edit" name="social_security_number" required>
+          </div>
+
+          <div class="form-group row">
+            <label for="gender-edit" class="col-form-label">Gender: </label>
+            <div class="col-sm-6">
+              <select class="form-control" id="gender-edit" name="gender">
+                <option>-SELECT-</option>
+                <option value="MALE">MALE</option>
+                <option value="FEMALE">FEMALE</option>
+              </select>
+            </div>
+
+            <div class="form-group row">
+              <label for="country-edit" class="col-form-label">Nationality: </label>
+              <div class="col-sm-6">
+                <select class="form-control" id="country-edit" name="countryid">
+                  <option>-SELECT-</option>
+                  <option th:each="country : ${country}"
+                          th:value="${country.id}"
+                          th:text="${country.description}">
+                  </option>
+                </select>
+              </div>
+            </div>
+
+            <div class="form-group row">
+              <label for="state-edit" class="col-form-label">State/Province: </label>
+              <div class="col-sm-6">
+                <select class="form-control" id="state-edit" name="stateid">
+                  <option>-SELECT-</option>
+                  <option th:each="state : ${state}"
+                          th:value="${state.id}"
+                          th:text="${state.name}">
+                  </option>
+                </select>
+              </div>
+            </div>
+
+            <div class="form-group row">
+              <label for="job-title-edit" class="col-form-label">Job Title: </label>
+              <div class="col-sm-6">
+                <select class="form-control" id="job-title-edit" name="job_titleid">
+                  <option>-SELECT-</option>
+                  <option th:each="jobTitle : ${jobTitle}"
+                          th:value="${jobTitle.id}"
+                          th:text="${jobTitle.description}">
+                  </option>
+                </select>
+              </div>
+            </div>
+
+            <div class="form-group row">
+              <label for="employee-type-edit" class="col-form-label">Employee Type: </label>
+              <div class="col-sm-6">
+                <select class="form-control" id="employee-type-edit" name="employee_typeid">
+                  <option>-SELECT-</option>
+                  <option th:each="employeeType : ${employeeType}"
+                          th:value="${employeeType.id}"
+                          th:text="${employeeType.description}">
+                  </option>
+                </select>
+              </div>
+            </div>
+
+
+            <div class="form-group row">
+              <label for="marital-status-edit" class="col-form-label">Marital Status: </label>
+              <div class="col-sm-6">
+                <select class="form-control" id="marital-status-edit" name="marital_status">
+                  <option>-SELECT-</option>
+                  <option value="orange">Married</option>
+                  <option value="pear">Single</option>
+                </select>
+              </div>
+            </div>
+
+            <div class="form-group">
+              <label for="birthdate-edit" class="col-form-label">Birth Date:</label>
+              <input type="date" class="form-control" id="birthdate-edit" name="birth_date" th:field="*{employeeObj.birthDate}" th:format="'yyyy-MM-dd'" required>
+            </div>
+
+            <div class="form-group">
+              <label for="hiredate-edit" class="col-form-label">Hire Date:</label>
+              <input type="date" class="form-control" id="hiredate-edit" name="hire_date" th:field="*{employeeObj.hireDate}" th:format="'yyyy-MM-dd'" required>
+            </div>
+
+          <div class="form-group">
+            <label for="city-edit" class="col-form-label">City:</label>
+            <input type="text" class="form-control" id="city-edit" name="city" required>
+          </div>
+
+          <div class="form-group">
+            <label for="adress-edit" class="col-form-label">Address:</label>
+            <input type="text" class="form-control" id="adress-edit" name="address" required>
+          </div>
+
+          <div class="form-group">
+            <label for="phone-edit" class="col-form-label">Phone:</label>
+            <input type="text" class="form-control" id="phone-edit" name="phone" required>
+          </div>
+
+          <div class="form-group">
+            <label for="mobile-edit" class="col-form-label">Mobile:</label>
+            <input type="text" class="form-control" id="mobile-edit" name="mobile" required>
+          </div>
+
+          <div class="form-group">
+            <label for="email-edit" class="col-form-label">Email:</label>
+            <input type="text" class="form-control" id="email-edit" name="email" required>
+          </div>
+
+            <div class="form-group row">
+              <label for="photoadd-edit" class="col-form-label">Select Image: </label>
+              <div class="col-sm-6">
+                <input type="file" class="form-control-file" id="photoadd-edit" name="photo" placeholder="Select File" accept=".png">
+              </div>
+            </div>
 
           <div class="form-group">
             <button type="submit" class="btn btn-primary">Submit</button>
           </div>
-        </form>
+          </div>
+          </form>
       </div>
       <div class="modal-footer">
         <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
@@ -805,7 +945,185 @@
     </div>
   </div>
 </div>
-<!--  End if Edit Modal-->
+<!--  End if Edit Modal--> 
+<!-- Start of Details Modal-->
+<div class="modal fade" id="detailsModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="d">Employee Details</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+        <form>
+          <div class="form-group">
+            <label for="id-details" readonly class="col-form-label">Id:</label>
+            <input type="text" class="form-control" id="id-details" readonly name="id" >
+          </div>
+
+
+          <div class="form-group">
+            <label for="first-name-details" readonly class="col-form-label">First Name:</label>
+            <input type="text" class="form-control" id="first-name-details" readonly name="first_name" >
+          </div>
+
+          <div class="form-group">
+            <label for="last-name-details" readonly class="col-form-label">Last Name:</label>
+            <input type="text" class="form-control" id="last-name-details" readonly name="last_name" >
+          </div>
+
+          <div class="form-group">
+            <label for="other-name-details" readonly class="col-form-label">Other Name:</label>
+            <input type="text" class="form-control" id="other-name-details" readonly name="other_name" >
+          </div>
+
+
+          <div class="form-group">
+            <label for="title-details" readonly class="col-form-label">Title:</label>
+            <input type="text" class="form-control" id="title-details" readonly name="title" >
+          </div>
+
+          <div class="form-group">
+            <label for="initials-details" readonly class="col-form-label">Initials:</label>
+            <input type="text" class="form-control" id="initials-details" readonly name="initials" >
+          </div>
+
+          <div class="form-group">
+            <label for="social-security-details" class="col-form-label">Social Security Number:</label>
+            <input type="text" class="form-control" id="social-security-details" readonly name="social_security_number" >
+          </div>
+
+          <div class="form-group">
+            <label for="gender-details"  class="col-form-label">Gender Details:</label>
+            <input type="text" class="form-control" id="gender-details" readonly name="social_security_number" >
+          </div>
+
+            <div class="form-group row">
+              <label for="country-details" class="col-form-label">Nationality: </label>
+              <div class="col-sm-6">
+                <select class="form-control" id="country-details" name="countryid">
+                  <option disabled>-SELECT-</option>
+                  <option disabled th:each="country : ${country}"
+                          th:value="${country.id}"
+                          th:text="${country.description}">
+                  </option>
+                </select>
+              </div>
+            </div>
+
+            <div class="form-group row">
+              <label for="state-details" readonly class="col-form-label">State/Province: </label>
+              <div class="col-sm-6">
+                <select class="form-control" id="state-details" readonly name="stateid">
+                  <option disabled>-SELECT-</option>
+                  <option disabled th:each="state : ${state}"
+                          th:value="${state.id}"
+                          th:text="${state.name}">
+                  </option>
+                </select>
+              </div>
+            </div>
+
+            <div class="form-group row">
+              <label for="job-title-details" readonly class="col-form-label">Job Title: </label>
+              <div class="col-sm-6">
+                <select class="form-control" id="job-title-details" readonly name="job_titleid">
+                  <option disabled>-SELECT-</option>
+                  <option disabled th:each="jobTitle : ${jobTitle}"
+                          th:value="${jobTitle.id}"
+                          th:text="${jobTitle.description}">
+                  </option>
+                </select>
+              </div>
+            </div>
+
+            <div class="form-group row">
+              <label for="employee-type-details" readonly class="col-form-label">Employee Type: </label>
+              <div class="col-sm-6">
+                <select class="form-control" id="employee-type-details" readonly name="employee_typeid">
+                  <option disabled>-SELECT-</option>
+                  <option  disabled th:each="employeeType : ${employeeType}"
+                          th:value="${employeeType.id}"
+                          th:text="${employeeType.description}">
+                  </option>
+                </select>
+              </div>
+            </div>
+
+
+            <div class="form-group row">
+              <label for="marital-status-details" readonly class="col-form-label">Marital Status: </label>
+              <div class="col-sm-6">
+                <select class="form-control" id="marital-status-details" readonly name="marital_status">
+                  <option disabled>-SELECT-</option>
+                  <option disabled value="orange">Married</option>
+                  <option disabled value="pear">Single</option>
+                </select>
+              </div>
+            </div>
+
+            <div class="form-group">
+              <label for="birthdate-details" class="col-form-label">Birth Date:</label>
+              <input type="text" class="form-control" id="birthdate-details"  name="birth_date" readonly>
+            </div>
+
+            <div class="form-group">
+              <label for="hiredate-details" class="col-form-label">Hire Date:</label>
+              <input type="text" class="form-control" id="hiredate-details"  name="hire_date" readonly>
+            </div>
+
+          <div class="form-group">
+            <label for="city-details" readonly class="col-form-label">City:</label>
+            <input type="text" class="form-control" id="city-details" readonly name="city" >
+          </div>
+
+          <div class="form-group">
+            <label for="adress-details" readonly class="col-form-label">Address:</label>
+            <input type="text" class="form-control" id="adress-details" readonly name="address" >
+          </div>
+
+          <div class="form-group">
+            <label for="phone-details" readonly class="col-form-label">Phone:</label>
+            <input type="text" class="form-control" id="phone-details" readonly name="phone" >
+          </div>
+
+          <div class="form-group">
+            <label for="mobile-details" readonly class="col-form-label">Mobile:</label>
+            <input type="text" class="form-control" id="mobile-details" readonly name="mobile" >
+          </div>
+
+          <div class="form-group">
+            <label for="email-details" readonly class="col-form-label">Email:</label>
+            <input type="text" class="form-control" id="email-details" readonly name="email" >
+          </div>
+
+
+         <!-- <a class="nav-link nav-profile d-flex align-items-center pe-0" href="#" data-bs-toggle="dropdown">
+            <img th:src="@{'/assets/img/user-photos/' + ${employee.photo} + '.png' }" alt="Profile" class="rounded-circle">
+          </a>
+
+            <div class="form-group row">
+              <label for="photo" readonly class="col-form-label">Profile Picture: </label>
+              <div class="col-sm-6">
+                <img th:src="@{'/assets/img/user-photos/'}" class="form-control-file" id="photo" readonly name="photo" placeholder="Select File" accept=".png">
+              </div>  
+            </div> -->
+
+          <div class="form-group">
+            <button type="submit" class="btn btn-primary">Submit</button>
+            </div>
+          </form>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+
+      </div>
+    </div>
+  </div>
+</div>
+
+
+<!-- End of Details Modal-->
 <!--  Start of Delete Modal-->
 <div class="modal" id="deleteModal" tabindex="-1">
   <div class="modal-dialog">

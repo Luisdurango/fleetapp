@@ -1,7 +1,6 @@
 package com.springconsole.fleetapp.controller;
 
 import com.springconsole.fleetapp.models.Country;
-import com.springconsole.fleetapp.repositories.CountryRepository;
 import com.springconsole.fleetapp.services.CountryService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;

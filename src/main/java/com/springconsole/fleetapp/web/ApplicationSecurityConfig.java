@@ -8,52 +8,39 @@ import org.springframework.security.authentication.dao.DaoAuthenticationProvider
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.core.userdetails.UserDetailsService;
-import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.NoOpPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
-import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
+import org.springframework.security.web.SecurityFilterChain;
 
 
-@Configuration
 @EnableWebSecurity
+@Configuration
 public class ApplicationSecurityConfig  {
 
+//    @Bean
+//    public PasswordEncoder passwordEncoder(){return new BCryptPasswordEncoder();}
+
+
+
     @Bean
-    public BCryptPasswordEncoder bCryptPasswordEncoder(){return new BCryptPasswordEncoder();}
+    public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
+        return http
+                .authorizeHttpRequests(auth->{
+                    auth.requestMatchers("/assets/**","/css","/img","/js","/vendor/**").permitAll();
+                    auth.anyRequest().authenticated();
 
 
-    protected void configure(HttpSecurity http) throws Exception {
-        http
-                .csrf().disable()
-                .authorizeHttpRequests((authorize ->
+                })
+                .formLogin(form -> form
+                        .loginPage("/customLogin")
+                        .permitAll()
+                        .defaultSuccessUrl("/index")
+                )
 
-                {
-                    try {
-                        authorize
-                                .requestMatchers("/login", "/resources/**", "/css/**", "/fonts/**", "/img/**").permitAll()
-                                .anyRequest().authenticated()
-                                .requestMatchers("/register", "/resources/**", "/css/**", "/fonts/**", "/img/**", "/js/**").permitAll()
-                                .requestMatchers("/users/addNew").permitAll()
-                                .and()
-                                .formLogin()
-                                .loginPage("/login").permitAll()
-                                .defaultSuccessUrl("/index")
-                                .and()
-                                .logout().invalidateHttpSession(true)
-                                .clearAuthentication(true)
-                                .logoutRequestMatcher(new AntPathRequestMatcher("/logout"))
-                                .logoutSuccessUrl("/login").permitAll()
-                                .and()
-                                .oauth2Login()
-                                .loginPage("/login")
-                                .defaultSuccessUrl("/index").permitAll();
+                .build();
 
 
-                    } catch (Exception e) {
-                        throw new RuntimeException(e);
-                    }
-                }
-                ));}
+    }
     @Bean
     public PasswordEncoder passwordEncoder(){
         return NoOpPasswordEncoder.getInstance();
@@ -65,7 +52,7 @@ public class ApplicationSecurityConfig  {
     public AuthenticationProvider authenticationProvider(){
         DaoAuthenticationProvider provider = new DaoAuthenticationProvider();
         provider.setUserDetailsService(userDetailsService);
-        provider.setPasswordEncoder(bCryptPasswordEncoder());
+        provider.setPasswordEncoder(passwordEncoder());
 
         return provider;
     }

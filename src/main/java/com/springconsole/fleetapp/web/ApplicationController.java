@@ -9,13 +9,15 @@ public class ApplicationController {
     public String goHome(){
 
         return "index";
-    }@GetMapping("/login")
+    }
+    @GetMapping("/customLogin")
     public String login(){
 
-        return "login";
-    }@GetMapping("/logout")
+        return "customLogin";
+    }
+    @GetMapping("/logout")
     public String logout(){
 
-        return "login";
+        return "customLogin";
     }
 }
