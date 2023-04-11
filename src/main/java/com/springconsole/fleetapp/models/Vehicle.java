@@ -14,7 +14,11 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class, property = "id")
 public class Vehicle {
-		
+	public Vehicle(int id, String name) {
+		this.id = id;
+		this.name = name;
+	}
+
 	@Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
 	@Column(name="id")

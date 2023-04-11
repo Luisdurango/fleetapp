@@ -1,9 +1,11 @@
 package com.springconsole.fleetapp.controller;
 
 import com.springconsole.fleetapp.models.Supplier;
+import com.springconsole.fleetapp.models.Vehicle;
 import com.springconsole.fleetapp.models.VehicleMaintenance;
 import com.springconsole.fleetapp.services.SupplierService;
 import com.springconsole.fleetapp.services.VehicleMaintenanceService;
+import com.springconsole.fleetapp.services.VehicleService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -20,6 +22,8 @@ public class VehicleMaintenanceController {
     @Autowired
     SupplierService supplierService;
 
+    @Autowired
+    VehicleService vehicleService;
 
     @GetMapping("/vehicle-maintenance")
     public String getEmployeetype(Model model){
@@ -33,8 +37,8 @@ public class VehicleMaintenanceController {
          VehicleMaintenance vehicleMaintenanceObj = new VehicleMaintenance();
          model.addAttribute("vehicleMaintenanceObj", vehicleMaintenanceObj);
 
-//        List<Vehicle> vehicleList = vehicleService.getVehicle();
-//        model.addAttribute("vehicle",vehicleList);
+        List<Vehicle> vehicleList = vehicleService.getOnlyId();
+        model.addAttribute("vehicle",vehicleList);
 
         return "vehicle-maintenance";
 

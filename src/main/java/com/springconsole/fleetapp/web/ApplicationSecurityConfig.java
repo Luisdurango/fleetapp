@@ -8,6 +8,7 @@ import org.springframework.security.authentication.dao.DaoAuthenticationProvider
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.core.userdetails.UserDetailsService;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.NoOpPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
@@ -15,7 +16,7 @@ import org.springframework.security.web.SecurityFilterChain;
 
 @EnableWebSecurity
 @Configuration
-public class ApplicationSecurityConfig  {
+public class    ApplicationSecurityConfig  {
 
 //    @Bean
 //    public PasswordEncoder passwordEncoder(){return new BCryptPasswordEncoder();}
@@ -26,7 +27,8 @@ public class ApplicationSecurityConfig  {
     public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
         return http
                 .authorizeHttpRequests(auth->{
-                    auth.requestMatchers("/assets/**","/css","/img","/js","/vendor/**").permitAll();
+                    auth.requestMatchers("/assets/**","/css","/img","/js","/vendor/**", "/pages-register").permitAll();
+                    auth.requestMatchers("/user/addNew").permitAll();
                     auth.anyRequest().authenticated();
 
 
@@ -42,8 +44,8 @@ public class ApplicationSecurityConfig  {
 
     }
     @Bean
-    public PasswordEncoder passwordEncoder(){
-        return NoOpPasswordEncoder.getInstance();
+    public BCryptPasswordEncoder passwordEncoder(){
+        return new BCryptPasswordEncoder();
         }
     @Autowired
     private UserDetailsService userDetailsService;

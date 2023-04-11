@@ -67,7 +67,7 @@ $('document').ready(function () {
             var formattedDate = hireDate.toLocaleDateString();
             $('#hiredate-details').val(formattedDate);
             $('#username-details').val(employee.username);
-
+            
 
         });
 

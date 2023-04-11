@@ -20,4 +20,9 @@ public class ApplicationController {
 
         return "customLogin";
     }
+    @GetMapping("/pages-register")
+    public String register(){
+
+        return "/pages-register";
+    }
 }
