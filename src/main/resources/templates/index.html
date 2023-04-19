@@ -211,8 +211,8 @@
 
           <a class="nav-link nav-profile d-flex align-items-center pe-0" href="#" data-bs-toggle="dropdown">
             <img th:src="@{'/assets/img/user-photos/' + ${#authentication.getName()} + '.png' }" alt="Profile" class="rounded-circle">
+            <span class="d-none d-md-block dropdown-toggle ps-2" th:text="${#authentication.getName()}">Guest</span>
           </a><!-- End Profile Iamge Icon -->
-<!--            <span class="d-none d-md-block dropdown-toggle ps-2" th:text="${#authentication.getName()}">Guest</span>-->
 
           <ul class="dropdown-menu dropdown-menu-end dropdown-menu-arrow profile">
             <li class="dropdown-header">
@@ -708,16 +708,16 @@
                 </div>
 
                 <div class="card-body">
-                  <h5 class="card-title">Recent Sales <span>| Today</span></h5>
+                  <h5 class="card-title">Vehicle Maintenances</h5>
 
                   <table class="table table-borderless datatable">
                     <thead>
                       <tr>
                         <th scope="col">#</th>
-                        <th scope="col">Customer</th>
-                        <th scope="col">Product</th>
-                        <th scope="col">Price</th>
+                        <th scope="col">Model</th>
+                        <th scope="col">Start Date</th>
                         <th scope="col">Status</th>
+                        <th scope="col">Invoice Status</th>
                       </tr>
                     </thead>
                     <tbody>
